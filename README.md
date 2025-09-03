@@ -4,4 +4,4 @@
 Этот репозиторий является каркасом для будущего веб-приложения.
 
 ## Ссылки
-- [Публичная страница на GitHub Pages]  https://nkt2006.github.io/projectMirea1/
+- [Публичная страница на GitHub Pages]  https://nkt2006.github.io/projectMirea1/src/index.html
