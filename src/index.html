@@ -11,11 +11,30 @@
     <meta property="og:title" content="Главная">
     <meta property="og:description" content="Главная страница сайта">
     <link rel="stylesheet" href="style.css">
-    <script src="modal.js" defer> </script>
-    <script src="validation.js" defer> </script>
 </head>
 
 <body>
+    <button class="theme-toggle" type="button" aria-pressed="false">Тема</button>
+
+    <script defer>
+        const KEY = 'theme';
+        const btn = document.querySelector('.theme-toggle');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        // Автовыбор: системная тема или сохранённый выбор пользователя
+        const savedTheme = localStorage.getItem(KEY);
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.body.classList.add('theme-dark');
+            btn?.setAttribute('aria-pressed', 'true');
+        }
+
+        // Переключение по кнопке с сохранением в localStorage
+        btn?.addEventListener('click', () => {
+            const isDark = document.body.classList.toggle('theme-dark');
+            btn.setAttribute('aria-pressed', String(isDark));
+            localStorage.setItem(KEY, isDark ? 'dark' : 'light');
+        });
+    </script>
     <!-- Шапка сайта -->
     <header>
         <a href="/">Логотип или название сайта</a>
@@ -28,6 +47,9 @@
             </ul>
         </nav>
     </header>
+
+    <img src="../images/pngtree-full-soccer-cartoon-animation-character-vector-in-jpg-file-free-download-png-image_6982356.png"
+        alt="футбольный персонаж" loading="lazy" decoding="async" width="640" height="360">
 
     <!-- Уникальное основное содержимое страницы -->
     <main>
@@ -44,7 +66,11 @@
         <section id="portfolio">
             <h2>Портфолио</h2>
             <p>Примеры наших работ...</p>
+            <iframe width="720" height="405" src="https://rutube.ru/play/embed/89da469d8cc9d6734a9b2fff95d38984/"
+                frameBorder="0" allow="clipboard-write; autoplay" allowFullScreen></iframe>
         </section>
+
+
 
         <!-- Секция 3 с якорем -->
         <section id="contacts">
