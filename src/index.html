@@ -21,17 +21,48 @@
             const btn = document.querySelector('.theme-toggle');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-            // Автовыбор: системная тема или сохранённый выбор пользователя
-            const savedTheme = localStorage.getItem(KEY);
-            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            
+            function applyDarkTheme() {
                 document.body.classList.add('theme-dark');
+
+                
+                const textElements = document.querySelectorAll('body, body *:not(script):not(style)');
+                textElements.forEach(element => {
+                    element.style.color = '#ffffff';
+                });
+
                 btn.setAttribute('aria-pressed', 'true');
             }
 
-            // Переключение по кнопке с сохранением в localStorage
+           
+            function applyLightTheme() {
+                document.body.classList.remove('theme-dark');
+
+                
+                const textElements = document.querySelectorAll('body, body *:not(script):not(style)');
+                textElements.forEach(element => {
+                    element.style.color = '';
+                });
+
+                btn.setAttribute('aria-pressed', 'false');
+            }
+
+           
+            const savedTheme = localStorage.getItem(KEY);
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                applyDarkTheme();
+            }
+
+            
             btn.addEventListener('click', () => {
-                const isDark = document.body.classList.toggle('theme-dark');
-                btn.setAttribute('aria-pressed', String(isDark));
+                const isDark = !document.body.classList.contains('theme-dark');
+
+                if (isDark) {
+                    applyDarkTheme();
+                } else {
+                    applyLightTheme();
+                }
+
                 localStorage.setItem(KEY, isDark ? 'dark' : 'light');
             });
         });

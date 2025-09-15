@@ -144,8 +144,8 @@ body.theme-dark {
     }
 
     .site-nav__link--cta {
-        background: #fff;
-        color: #0b0b0b;
+        background: blue;
+        color: white;
     }
 
     .site-nav__link:active {
