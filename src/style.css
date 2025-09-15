@@ -1,69 +1,4 @@
-/* Базовая предсказуемость размеров */
-* {
-    box-sizing: border-box;
-}
-
-html,
-body {
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    background: var(--color-bg);
-    color: var(--color-fg);
-    font-family: var(--font-body);
-    line-height: 1.5;
-}
-
-/* Формы: размеры, отступы, визуальный порядок */
-label {
-    display: block;
-    margin: 0.5rem 0 0.25rem;
-}
-
-input,
-select,
-textarea,
-button {
-    width: 100%;
-    max-width: 480px;
-    padding: .5rem .75rem;
-    border: 1px solid #c8c8c8;
-    border-radius: 8px;
-    background: #fff;
-}
-
-/* Кнопка по умолчанию */
-button,
-[type="submit"] {
-    background: #0a84ff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-
-/* Состояния: клавиатура/мышь/ошибки */
-:where(input, select, textarea, button):focus-visible {
-    outline: 2px solid #0a84ff;
-    outline-offset: 2px;
-}
-
-button:hover {
-    filter: brightness(0.95);
-}
-
-:disabled,
-[aria-disabled="true"] {
-    opacity: .6;
-    cursor: not-allowed;
-}
-
-/* Подсветка ошибочных полей (установите aria-invalid="true") */
-[aria-invalid="true"] {
-    border-color: #b00020;
-}
-
+/* Дизайн-токены (всегда в начале) */
 :root {
     /* Палитра */
     --color-bg: #fff;
@@ -82,15 +17,315 @@ button:hover {
 
     /* Скругления и тени */
     --radius: 12px;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.08);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .08), 0 8px 24px rgba(0, 0, 0, .08);
 }
 
-/* Тёмная тема: переопределяем только значения токенов */
+/* БАЗА: читаемость и предсказуемость размеров */
+* {
+    box-sizing: border-box;
+}
+
 body.theme-dark {
-    --color-bg: #0b0b0b;
-    --color-fg: #f5f5f5;
-    --color-muted: #aaa;
-    --color-primary: #6aa2ff;
+    color-scheme: dark;
+    --color-bg: #1a2530;
+    --color-text: #ecf0f1;
+    --color-primary: #2ecc71;
+    --color-secondary: #34495e;
+    --color-accent: #e74c3c;
+    --color-border: #46627f;
+    --color-header: #1a2530;
+    --color-footer: #1a2530;
+    --color-footer-text: #bdc3c7;
 }
 
-/* Reset-минимум — подробнее в 1.8 */
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Плавная прокрутка для якорей */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background: var(--color-bg);
+        color: var(--color-fg);
+        font-family: var(--font-body);
+        line-height: 1.5;
+    }
+
+    /* Базовые стили для форм (используем токены) */
+    label {
+        display: block;
+        margin: var(--space-2) 0 var(--space-1);
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        max-width: 480px;
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--color-muted);
+        border-radius: var(--radius);
+        background: var(--color-bg);
+    }
+
+    button,
+    [type="submit"] {
+        width: auto;
+        /* Не всегда 100%, для кнопок в действиях */
+        padding: var(--space-2) var(--space-3);
+        background: var(--color-primary);
+        color: #fff;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+    }
+
+    /* Состояния: клавиатура/мышь/ошибки */
+    :where(input, select, textarea, button):focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+    }
+
+    button:hover {
+        filter: brightness(0.95);
+    }
+
+    :disabled,
+    [aria-disabled="true"] {
+        opacity: .6;
+        cursor: not-allowed;
+    }
+
+    [aria-invalid="true"] {
+        border-color: var(--color-danger);
+    }
+
+    /* Шапка */
+    .site-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-3) var(--space-4);
+        background: var(--color-bg);
+        box-shadow: var(--shadow);
+    }
+
+    .site-header__brand {
+        font-size: 1.5rem;
+        color: var(--color-primary);
+        text-decoration: none;
+    }
+
+    /* Навигация */
+    .site-nav__list {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        gap: var(--space-3);
+    }
+
+    .site-nav__link {
+        color: var(--color-fg);
+        text-decoration: none;
+        padding: var(--space-1) var(--space-2);
+        border-radius: var(--radius);
+    }
+
+    .site-nav__link:hover,
+    .site-nav__link:focus-visible {
+        background: var(--color-primary);
+        color: #fff;
+    }
+
+    .site-nav__link--cta {
+        background: #fff;
+        color: #0b0b0b;
+    }
+
+    .site-nav__link:active {
+        filter: brightness(0.9);
+    }
+
+    .site-nav__link--active {
+        font-weight: bold;
+        border-bottom: 2px solid var(--color-primary);
+    }
+
+    /* Хлебные крошки */
+    .breadcrumbs {
+        margin: var(--space-3) 0;
+        font-size: 0.9rem;
+    }
+
+    .breadcrumbs__list {
+        list-style: none;
+        display: flex;
+        gap: var(--space-2);
+        margin: 0;
+        padding: 0;
+    }
+
+    .breadcrumbs__item:not(:last-child)::after {
+        content: "→";
+        color: var(--color-muted);
+        margin: 0 var(--space-1);
+    }
+
+    .breadcrumbs__link {
+        color: var(--color-primary);
+        text-decoration: none;
+    }
+
+    .breadcrumbs__link:hover {
+        text-decoration: underline;
+    }
+
+    .breadcrumbs__current {
+        color: var(--color-muted);
+    }
+
+    /* Якоря */
+    :target {
+        outline: 2px dashed var(--color-primary);
+        outline-offset: 4px;
+    }
+
+    /* Модалка (объединили с dialog) */
+    .modal {
+        padding: var(--space-4);
+        border: none;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        background: var(--color-bg);
+        width: min(100% - 2*var(--space-4), 480px);
+    }
+
+    .modal::backdrop {
+        background: rgba(0, 0, 0, .5);
+    }
+
+    /* Форма (расширили с токенами) */
+    .form__label {
+        display: block;
+        margin: var(--space-2) 0 var(--space-1);
+    }
+
+    .form__input,
+    .form__select,
+    .form__textarea {
+        width: 100%;
+        max-width: 480px;
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--color-muted);
+        border-radius: var(--radius);
+        background: var(--color-bg);
+        margin-bottom: var(--space-3);
+    }
+
+    .form__input:focus-visible,
+    .form__select:focus-visible,
+    .form__textarea:focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+    }
+
+    [aria-invalid="true"] {
+        border-color: var(--color-danger);
+    }
+
+    /* Кнопки формы */
+    .form__button {
+        background: var(--color-primary);
+        color: #fff;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        padding: var(--space-2) var(--space-3);
+        margin-right: var(--space-2);
+        transition: filter 0.1s;
+    }
+
+    .form__button:hover,
+    .form__button:focus-visible {
+        filter: brightness(0.95);
+    }
+
+    .form__button:disabled,
+    .form__button[aria-disabled="true"] {
+        opacity: .6;
+        cursor: not-allowed;
+    }
+
+    .form__button--cancel {
+        background: var(--color-muted);
+        color: var(--color-bg);
+    }
+
+    .form__actions {
+        display: flex;
+        gap: var(--space-2);
+        margin-top: var(--space-3);
+    }
+
+    /* Карточка */
+    .card {
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        background: var(--color-bg);
+        overflow: hidden;
+        margin-bottom: var(--space-4);
+        max-width: 480px;
+    }
+
+    .card__img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+
+    .card__content {
+        padding: var(--space-3);
+    }
+
+    /* Герой с фоном */
+    .hero {
+        background:
+            linear-gradient(to top, rgba(0, 0, 0, .55), rgba(0, 0, 0, .15)),
+            url("../assets/fonimg.jpg") center/cover no-repeat;
+        color: #fff;
+        padding: clamp(2rem, 6vw, 6rem) 1rem;
+        border-radius: var(--radius);
+        text-align: center;
+        margin-bottom: var(--space-5);
+    }
+
+    .hero__cta {
+        margin-top: var(--space-4);
+        display: inline-block;
+    }
+
+    /* Контейнер для видео с aspect-ratio */
+    .media {
+        aspect-ratio: 16/9;
+        /* Стандартное для видео */
+        width: min(100%, 960px);
+        /* Адаптивно, не шире 960px */
+        margin: var(--space-4) auto;
+        /* Центрирование и отступы */
+    }
+
+    .media iframe,
+    .media video {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        border-radius: var(--radius);
+    }
